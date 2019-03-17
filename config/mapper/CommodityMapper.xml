@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.article.dao.CommodityMapper">
+
+	<!-- 查询所有数据 -->
+	<select id="findAl" resultType="com.article.domain.Commodity">
+		SELECT 	id, 
+			NAME, 
+			price
+			FROM 
+		market.commodity
+	</select>
+	
+	<!-- 添加商品 -->
+	<insert id="save" parameterType="com.article.domain.Commodity">
+		INSERT INTO market.commodity 
+			( 
+			NAME, 
+			price
+			)
+			VALUES
+			( 
+			#{name}, 
+			#{price}
+			)
+	</insert>
+	
+	<!-- 根据id查询对象 -->
+	<select id="findById" parameterType="int" resultType="com.article.domain.Commodity">
+		SELECT 	id, 
+			NAME, 
+			price
+			FROM 
+		market.commodity
+		    where id = #{value}
+	</select>
+	
+	<!-- 根据name查询对象 -->
+	<select id="findByName" parameterType="string" resultType="com.article.domain.Commodity">
+		SELECT 	id, 
+			NAME, 
+			price
+			FROM 
+		market.commodity
+		    where name = #{value}
+	</select>
+	
+	
+	<!-- 根据id修改数据 -->
+	<update id="update" parameterType="com.article.domain.Commodity">
+		UPDATE market.commodity 
+			SET
+			NAME = #{name} , 
+			price = #{price}
+		WHERE
+			id = #{id}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="Integer[]">
+	DELETE FROM market.commodity 
+		<where>
+			id
+			<foreach collection="array" item="id" open="in (" close=")" separator=",">
+				#{id}			
+			</foreach>
+		</where>
+	</delete>
+	
+</mapper>

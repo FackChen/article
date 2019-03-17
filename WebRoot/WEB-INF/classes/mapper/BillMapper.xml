@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 该文件编写mybatis中的mapper接口里面的方法提供对应的sql语句 -->
+<mapper namespace="com.article.dao.BillMapper">
+
+	<!-- 查询所有数据 -->
+	<select id="findAll" resultType="com.article.domain.Bill">
+		SELECT 	id, 
+			NAME, 
+			price,
+			number
+			FROM 
+		market.t_bill
+	</select>
+	
+	<!-- 添加客户 -->
+	<insert id="save" parameterType="com.article.domain.Bill">
+		INSERT INTO market.t_bill 
+			( 
+			NAME, 
+			price,
+			number
+			)
+			VALUES
+			( 
+			#{name}, 
+			#{price},
+			#{number}
+			)
+	</insert>
+	
+	<!-- 根据id查询对象 -->
+	<select id="findById" parameterType="int" resultType="com.article.domain.Bill">
+		SELECT 	id, 
+			NAME, 
+			price,
+			number
+			FROM 
+		market.t_bill
+		    where id = #{value}
+	</select>
+	
+	<!-- 根据name查询对象 -->
+	<select id="findByName" parameterType="string" resultType="com.article.domain.Bill">
+		SELECT 	id, 
+			NAME, 
+			price,
+			number
+			FROM 
+		market.t_bill
+		    where name = #{value}
+	</select>
+	
+	<!-- 根据id修改数据 -->
+	<update id="update" parameterType="com.article.domain.Bill">
+		UPDATE market.t_bill 
+			SET
+			NAME = #{name} , 
+			price = #{price},
+			number = #{number}
+		WHERE
+			id = #{id}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="Integer[]">
+	DELETE FROM market.t_bill 
+		<where>
+			id
+			<foreach collection="array" item="id" open="in (" close=")" separator=",">
+				#{id}			
+			</foreach>
+		</where>
+	</delete>
+	
+	<!-- 删除所有数据 -->
+	<delete id="deleteAll">
+	DELETE FROM market.t_bill
+	</delete>
+	
+</mapper>
